@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Sport{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+
+  <div>
+    <h1>Echipe</h1>
+    {% for team in teams_list %}
+      <a href="{% url 'teams' team_id=team.id %}">{{ team.nume }}</a>
+    {% endfor %}
+  </div>
+
+  <div>
+    <h1>Adauga echipa</h1>
+      <form action="" method="POST">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+        <input type="submit" value="Submit" />
+      </form>
+  </div>
+
+{% else %}
+  <p>You are not logged in</p>
+  <a href="{% url 'login' %}">Log In</a>
+{% endif %}
+{% endblock %}

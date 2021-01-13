@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+
+  <div>
+    <h1>Meciuri curente</h1>
+    {% for match in matches %}
+      {{ match.echipa1 }} vs {{ match.echipa2 }}: {{ match.data }}
+      <br>
+    {% endfor %}
+  </div>
+
+  <div>
+      <h1>Provoaca o echipa</h1>
+      <form action="" method="POST">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+        <input type="submit" value="Submit" />
+      </form>
+  </div>
+
+  <div>
+    <h1>Jucatori in echipa:</h1>
+      {% for player in players %}
+        {{ player.prenume }} {{ player.nume }}
+      {% endfor %}
+  </div>
+
+{% else %}
+  <p>You are not logged in</p>
+  <a href="{% url 'login' %}">Log In</a>
+{% endif %}
+{% endblock %}
